@@ -3,6 +3,7 @@ package com.example.EcomerceUribe.modelos;
 import com.example.EcomerceUribe.ayudas.Cargos;
 import com.example.EcomerceUribe.ayudas.Sedes;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
 @Entity
@@ -11,12 +12,14 @@ public class Empleado {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Schema(hidden = true)
     private Integer id;
 
     @Enumerated(EnumType.STRING)
     @Column(name="rol",nullable = false, unique = false)
     private Cargos cargo;
     @Column(name="salary",nullable = false, unique = false)
+    @Schema(description = "Valor bruto del salario", example = "1632500")
     private Integer salario;
     @Enumerated(EnumType.STRING)
     @Column(name="site",nullable = false, unique = false)
@@ -25,6 +28,7 @@ public class Empleado {
     @OneToOne
     @JoinColumn(name = "fk_usuario", referencedColumnName = "id")
     @JsonManagedReference(value = "relacionempleadousuario")
+    @Schema(hidden = true)
     private Usuario usuario;
 
     public Empleado() {

@@ -2,6 +2,7 @@ package com.example.EcomerceUribe.modelos;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CollectionId;
 
@@ -14,25 +15,30 @@ public class Pedido {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Schema(hidden = true)
     private Integer id;
     @Column (name = "montoTotal", nullable = false)
+    @Schema (description = "valor total del producto", example = "360.000")
     private Integer montoTotal;
     @Column(name = "fechaCreacion", nullable = false)
     private LocalDate fechaCreacion;
     @Column(name = "fechaEntrega", nullable = false)
     private LocalDate fechaEntrega;
     @Column(name = "contoEnvio", nullable = false)
+    @Schema (description = "Valor del envio", example = "15.000")
     private Integer costoEnvio;
 
 
     @OneToMany(mappedBy = "pedido")
     @JsonManagedReference(value = "relacionpedidoproducto")
+    @Schema(hidden = true)
     private List<Producto> productos;
 
     //relacion PedidoN Cliente1
     @ManyToOne
     @JoinColumn(name = "fk_cliente", referencedColumnName = "id")
     @JsonBackReference(value = "pedidoacliente")
+    @Schema(hidden = true)
     private Cliente cliente;
 
     public Pedido() {

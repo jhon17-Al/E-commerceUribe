@@ -2,6 +2,7 @@ package com.example.EcomerceUribe.modelos;
 
 import com.example.EcomerceUribe.ayudas.Departamentos;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -11,22 +12,28 @@ import java.util.List;
 public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Schema(hidden = true)
     private Integer id;
     @Column(name = "direccion", nullable = false,unique = false, length = 50)
+    @Schema (description = "direccion de residencia", example = "Cra.17A #56-8")
     private String direccion;
     @Column(name = "calificacion", nullable = false, unique = false )
+    @Schema (description = "Calificación entre 1 y 5", example = "4.5")
     private Double calificacion;
     @Column(name = "referenciaPago", nullable = false, unique = false, length = 30)
+    @Schema (description = "referencia del pago", example = "H01564")
     private String referenciaPago;
     @Enumerated(EnumType.STRING)
     @Column(name = "departament", unique = false, nullable = false)
     private Departamentos departamentos;
     @Column(name = "ciudad", nullable = false, unique = false, length = 40)
+    @Schema (description = "Ciudad de rersidencia", example = " Medellin")
     private String ciudad;
 
     //relacion Cliente 1 pedido N
     @OneToMany(mappedBy = "cliente")
     @JsonManagedReference(value = "pedidoacliente")
+    @Schema(hidden = true)
     private List<Pedido> pedidos;
 
 
